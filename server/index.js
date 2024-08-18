@@ -13,10 +13,10 @@ app.use(express.json());
 connectDB();
 
 //Routes
-app.use('/api/auth', userRoute);
+app.use('/api/auth', userRoute); 
 app.use('/api/tests', testRoute);
-app.use('./api/questions', questionRoute);
-app.use('./api/submissions', submissionRoute);
+app.use('/api/questions', questionRoute);
+app.use('/api/submissions', submissionRoute);
 
 const PORT = process.env.PORT || 2500;
 
