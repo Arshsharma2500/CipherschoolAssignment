@@ -1,24 +1,27 @@
+require('dotenv').config();
 const express = require('express');
-const connectDB = require('./db/db');
+const connectDB = require('./config/db');
+const userRoute = require('./routes/userRoute');
+const testRoute = require('./routes/testRoute');
+const questionRoute = require('./routes/questionRoute');
+const submissionRoute = require('./routes/submissionRoute');
+
+const app = express();
+app.use(express.json());
 
 //connect MongoDB
 connectDB();
 
-const authRoutes = require('./router/authRoute');
+//Routes
+app.use('/api/auth', userRoute);
+app.use('/api/tests', testRoute);
+app.use('./api/questions', questionRoute);
+app.use('./api/submissions', submissionRoute);
 
-const app = express();
+const PORT = process.env.PORT || 2500;
 
-app.use(express.json());
-
-app.get('/', (req, res) => {
-    res.json("hello Arsh");
-})
-
-// Use authentication routes
-app.use('/api/auth', authRoutes);
-
-app.listen(2500, () => {
-    console.log(`http://localhost:2500/`);
-})
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
 
 module.exports = app;
