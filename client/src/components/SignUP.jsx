@@ -3,6 +3,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import PasswordInput from '../input/PasswordInput'
 import { validateEmail } from '../utils/Helper';
 import axiosInstance from '../utils/AxiosInstance';
+import logo from '../assets/logo.png';
 
 function SignUp() {
     const[name, setName] = useState("");
@@ -69,15 +70,18 @@ function SignUp() {
       const InputStyle = {
         backgroundColor: 'rgba(1, 1, 1, 0.01)',
         border: 'none',
-        borderBottom: 'solid white thin',
+        borderBottom: 'solid black thin',
         borderLeft: 'none',
-        color: 'white',
+        color: 'black',
         borderRadius: 'none'
       };
   
     return (
       <>
-      <div className='flex justify-center items-center h-screen bg-gray-300'>
+      <div className='flex justify-center items-center h-screen bg-gray-100'>
+        <div className='absolute left-80'>
+          <img src={logo} className='w-72'></img>
+        </div>
         <div style={Style} className='rounded-2xl shadow-2xl shadow-black'>
               <div className='flex flex-col gap-0 p-2 w-1/3
                   relative top-1/4 left-2/4 text-center'>
@@ -94,7 +98,7 @@ function SignUp() {
   
                       <input type='text' 
                       placeholder='Name' 
-                      className='input-box'
+                      className='input-box p-1'
                       style={InputStyle}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -104,7 +108,7 @@ function SignUp() {
   
                       <input type='text' 
                       placeholder='abc@gmail.com' 
-                      className='input-box'
+                      className='input-box p-1'
                       style={InputStyle}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}

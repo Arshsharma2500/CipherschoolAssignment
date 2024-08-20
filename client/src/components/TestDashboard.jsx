@@ -4,6 +4,7 @@ import PasswordInput from '../input/PasswordInput';
 import { validateEmail } from '../utils/Helper';
 import axiosInstance from '../utils/AxiosInstance';
 // import { useAuth } from '../context/AuthContext';
+import logo from '../assets/logo.png';
 
 function TestDashboard() {
 
@@ -62,17 +63,20 @@ const style = {
   const InputStyle = {
     backgroundColor: 'rgba(1, 1, 1, 0.01)',
     border: 'none',
-    borderBottom: 'solid white thin',
+    borderBottom: 'solid black thin',
     borderLeft: 'none',
-    color: 'white',
+    color: 'black',
     borderRadius: 'none'
   };
     
 
   return (
     <>
-        <div className='flex justify-center items-center h-screen bg-gray-300'>
-            <div style={style} className='rounded-2xl shadow-2xl shadow-black'>
+        <div className='flex flex-row justify-center items-center h-screen bg-gray-100'>
+            <div className='absolute left-80'>
+            <img src={logo} className='w-72'></img>
+            </div>
+            <div style={style} className='rounded-2xl shadow-2xl shadow-black text-black'>
                 <div className='flex flex-col gap-4 p-4 w-1/3
                 relative top-1/4 left-2/4 text-center'>
 
@@ -89,7 +93,7 @@ const style = {
 
                         <input type='text' 
                         placeholder='Email' 
-                        className='input-box text-white font-serif'
+                        className='input-box text-black font-serif p-2'
                         style={InputStyle}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)} />

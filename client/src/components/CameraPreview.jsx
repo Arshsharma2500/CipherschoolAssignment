@@ -20,9 +20,9 @@ const CameraPreview = ({ onPermissionDenied }) => {
     }, [onPermissionDenied]);
 
     return (
-        <div className="camera-preview">
+        <div className="camera-preview w-1/6 fixed right-0 z-10">
             <h3>Camera Preview</h3>
-            <video ref={videoRef} autoPlay />
+            <video className='rounded' ref={videoRef} autoPlay />
         </div>
     );
 };

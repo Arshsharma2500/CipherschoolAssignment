@@ -10,11 +10,11 @@ function PasswordInput({value, onChange, placeholder}) {
 
     const InputStyle = {
       backgroundColor: 'rgba(1, 1, 1, 0.01)',
-      border: 'none',
-      borderBottom: 'solid white thin',
-      borderLeft: 'none',
-      color: 'white',
-      borderRadius: 'none',
+        border: 'none',
+        borderBottom: 'solid black thin',
+        borderLeft: 'none',
+        color: 'black',
+        borderRadius: 'none'
     };
 
   return (
