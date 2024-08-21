@@ -15,8 +15,11 @@ const TestEnvironment = () => {
     const navigate = useNavigate();
     const { testid } = useParams();
     
+    const userId = localStorage.getItem("userId");
+
     //fetch question by testid
     useEffect(() => {
+         
         const fetchQuestions = async () => {
             try {
                 const response = await axiosInstance.get(`/api/questions/test/${testid}`);
@@ -37,12 +40,42 @@ const TestEnvironment = () => {
             ...answers,
             [questionId]: selectedOption,
         });
+        console.log(answers);
     };
 
-    const handleSubmit = () => {
-        // Submit the answers to backend
-        navigate('/finish-test');
-    };
+
+     // Submit the answers to backend
+    const handleSubmit = async () => {
+            try {
+                const selections = Object.entries(answers).map(([questionId, option]) => ({
+                    questionId: questionId,
+                    option: option,
+                    saveAt: new Date(), // Optional: could also store the time when the answer was selected
+                }));
+        
+                const payload = {
+                    testId: testid,
+                    userId: userId,
+                    selections: selections,
+                    endedAt: new Date(), // Optional: can store the time when the test was submitted
+                    isDeleted: false, // Optional: can be omitted as it defaults to false
+                };
+        
+                const response = await axiosInstance.post('/api/submissions/submit', payload);
+                console.log(response.data);
+                if (response.status === 201) {
+                    alert("Test submitted successfully!");
+                    navigate('/finish-test');
+                } else {
+                    alert("Failed to submit the test. Please try again.");
+                }
+            } catch (err) {
+                console.error("Error submitting test:", err);
+                alert("An error occurred while submitting the test.");
+            }
+        };
+        
+
 
     const handlePermissionDenied = () => {
         alert("Camera and microphone permissions are required!");
@@ -102,12 +135,13 @@ const TestEnvironment = () => {
                 <Timer initialMinutes={45} initialSeconds={0} onTimeUp={handleTimeUp} />
                     <div className="question-nav">
                         <h3>Dummy Test</h3>
-                        <div className="question-list">
+                        <div className="question-list p-2">
                             {questions.map((q, index) => (
                                 <button
                                     key={q._id}
                                     id={`question-${index + 1}`} // Add an ID for easier access
-                                    className={`question-number ${index === selectedQuestionIndex ? 'selected' : ''}`}
+                                    className={`bg-gray-100 p-2 text-black py-2 w-12 h-12
+                                        question-number ${index === selectedQuestionIndex ? 'selected' : ''}`}
                                     onClick={() => handleQuestionSelect(index)}
                                 >
                                     {index + 1}
@@ -123,7 +157,7 @@ const TestEnvironment = () => {
                         <h4 className='text-black text-lg font-serif font-medium'>{selectedQuestionIndex+1}. {questions[selectedQuestionIndex].question}</h4>
                         {questions[selectedQuestionIndex].options.map(option => (
                             <label key={option} className='text-black font-serif'>
-                                <input className='mr-3'
+                                <input className='mr-3 cursor-pointer'
                                     type="radio"
                                     name={`question-${questions[selectedQuestionIndex]._id}`}
                                     value={option}

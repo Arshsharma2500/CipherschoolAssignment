@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 
+// Create a transporter using Gmail service
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -8,7 +9,8 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const sendEmail = (to, subject, htmlContent) => {
+// Function to send an email
+const sendEmail = async (to, subject, htmlContent) => {
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to,
@@ -16,13 +18,14 @@ const sendEmail = (to, subject, htmlContent) => {
         html: htmlContent
     };
 
-    transporter.sendMail(mailOptions, (err, info) => {
-        if(err) {
-            console.log('Error sending email:', err);
-        } else {
-            console.log('Email sent:', info.response);
-        }
-    });
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Email sent:', info.response);
+        return info;
+    } catch (err) {
+        console.error('Error sending email:', err);
+        throw err;  // Re-throw the error to handle it where the function is called
+    }
 };
 
 module.exports = sendEmail;
