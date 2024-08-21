@@ -1,1 +1,1 @@
-export const BASE_URL = ' http://localhost:2500'
+export const BASE_URL = `https://cipherschoolassignment-k2o3.onrender.com`
